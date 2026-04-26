@@ -9,12 +9,15 @@ onAuthStateChanged(auth, (user) => {
   currentUser = user;
   const btn = document.getElementById("loginBtn");
   const userInfo = document.getElementById("userInfo");
+  const writePost = document.getElementById("writePost");
   if (user) {
     if (btn) btn.textContent = "Sign Out";
     if (userInfo) userInfo.textContent = `Hi, ${user.displayName}`;
+    if (writePost) writePost.style.display = "block";
   } else {
     if (btn) btn.textContent = "Sign in with Google";
     if (userInfo) userInfo.textContent = "";
+    if (writePost) writePost.style.display = "none";
   }
 });
 
@@ -81,6 +84,25 @@ async function addGalleryImage(e) {
 
 document.getElementById("adminBlogForm")?.addEventListener("submit", publishBlog);
 document.getElementById("adminGalleryForm")?.addEventListener("submit", addGalleryImage);
+
+document.getElementById("userBlogForm")?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const title = document.getElementById("userBlogTitle").value;
+  const date = document.getElementById("userBlogDate").value;
+  const content = document.getElementById("userBlogContent").value;
+  const status = document.getElementById("userBlogStatus");
+  await addDoc(collection(db, "blogs"), {
+    title,
+    date,
+    content,
+    imageUrl: "",
+    author: currentUser.displayName,
+    authorEmail: currentUser.email
+  });
+  status.textContent = "Published!";
+  e.target.reset();
+  loadBlogs();
+});
 
 loadBlogs();
 loadGallery();

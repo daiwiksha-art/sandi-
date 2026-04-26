@@ -45,6 +45,18 @@
       <div class="container">
         <h2 class="section-title">Blog</h2>
         <p class="section-copy">Latest updates from Org & Aura.</p>
+        <div id="writePost" style="display:none; margin-bottom:28px;">
+          <article class="panel glass">
+            <h3>Write a Blog Post</h3>
+            <form id="userBlogForm">
+              <input id="userBlogTitle" type="text" placeholder="Title" required />
+              <input id="userBlogDate" type="date" required />
+              <textarea id="userBlogContent" placeholder="Write your post..." required></textarea>
+              <button class="btn btn-primary" type="submit">Publish</button>
+            </form>
+            <p id="userBlogStatus"></p>
+          </article>
+        </div>
         <div id="blogList" class="blog-list"></div>
       </div>
     </section>
